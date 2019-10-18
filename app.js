@@ -12,3 +12,15 @@ const startButton =document.querySelector(".btn__reset");
 startButton.addEventListener("click",()=>{
    document.getElementById("overlay").style.display="none";
 });
+
+//Create a phrases array to contain at least 5 different phrases
+let phrases=["Hello there","This is Jenny","Welcome to my websites","Programming is fun","Enjoy everyday"];
+
+//Create a getRandomPhraseAsArray function.
+function getRandomPhraseAsArray(arr){
+   let randomNumber=Math.floor(Math.random()*5);
+   let characterArray=arr[randomNumber].split(" ");
+   return characterArray;
+}
+
+console.log(getRandomPhraseAsArray(phrases));
