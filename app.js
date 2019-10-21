@@ -4,7 +4,10 @@ const qwerty = document.getElementById("qwerty");
 //Get the element with the ID of phrase and save it to a variable.
 const phrase = document.getElementById("phrase");
 const ul = phrase.firstElementChild;
-
+const shows = document.getElementsByClassName("show");
+const letters = document.getElementsByClassName("letter");
+//Count the missed guesses in the game
+const scoreboard = document.getElementById("scoreboard");
 //Create a missed variable to keep the track of the number of guesses
 let missed = 0;
 
@@ -45,7 +48,7 @@ function addPhraseToDisplay(arr) {
 const phraseArray = getRandomPhraseAsArray(phrases);
 console.log(phraseArray);
 addPhraseToDisplay(phraseArray);
-const letters = document.getElementsByClassName("letter");
+
 //Create a checkLetter function.
 function checkLetter(button) {
    let letter = null;
@@ -61,9 +64,7 @@ function checkLetter(button) {
       return null;
    }
 };
-const shows=document.getElementsByClassName("show");
-//Count the missed guesses in the game
-const scoreboard = document.getElementById("scoreboard");
+
 //Add an event listener to the keyboard.
 qwerty.addEventListener("click", (event) => {
    if (event.target.tagName === "BUTTON") {
@@ -71,28 +72,32 @@ qwerty.addEventListener("click", (event) => {
       const div = event.target.parentNode;
       button.className = "chosen";
       button.setAttribute("disabled", true);
+
       const letterFound = checkLetter(button);
       if (letterFound === null) {
          missed = missed + 1;
          const ol = scoreboard.firstElementChild;
-         const li = ol.lastElementChild;
-         ol.removeChild(li);
+         const liFirst = ol.firstElementChild;
+         ol.removeChild(liFirst);
+         let li = document.createElement('li');
+         li.innerHTML =`<img src="images/lostHeart.png" height="35px" width="30px">`;
+         ol.appendChild(li);
       }
+
+
+
+
       checkWin();
    }
-   
+
    function checkWin() {
-      console.log(shows.length);
-      console.log(letters.length);
-      if(shows.length===letters.length){
-         document.getElementById("overlay").className="win";
-         document.getElementById("overlay").style.display="block";
+      if (shows.length === letters.length) {
+         document.getElementById("overlay").className = "win";
+         document.getElementById("overlay").style.display = "block";
       }
-
-      if(missed>=5){
-         document.getElementById("overlay").className="lose";
-         document.getElementById("overlay").style.display="block";
+      if (missed >= 5) {
+         document.getElementById("overlay").className = "lose";
+         document.getElementById("overlay").style.display = "block";
       }
-
    }
 });
