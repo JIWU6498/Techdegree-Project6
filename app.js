@@ -1,26 +1,21 @@
-//Get the element with the ID of qwerty and save it to a variable.
 const qwerty = document.getElementById("qwerty");
-
-//Get the element with the ID of phrase and save it to a variable.
 const phrase = document.getElementById("phrase");
 const ul = phrase.firstElementChild;
 const shows = document.getElementsByClassName("show");
 const letters = document.getElementsByClassName("letter");
 const overlay = document.getElementById("overlay");
-//Count the missed guesses in the game
+const p = document.querySelector(".statusMessage");
 const scoreboard = document.getElementById("scoreboard");
-//Create a missed variable to keep the track of the number of guesses
-let missed = 0;
-
-//Attach a event listener to the “Start Game” button to hide the start screen overlay.
+const phraseArray = getRandomPhraseAsArray(phrases);
 const startButton = document.querySelector(".btn__reset");
+
+let missed = 0;
+let phrases = ["Good Morning", "Amazon River", "Welcome", "Programming is fun", "Happy everyday"];
 
 startButton.addEventListener("click", () => {
    document.getElementById("overlay").style.display = "none";
+   resetStatus();
 });
-
-//Create a phrases array to contain at least 5 different phrases
-let phrases = ["Good Morning", "Amazon River", "Welcome", "Programming is fun", "Happy everyday"];
 
 //Create a getRandomPhraseAsArray function.
 function getRandomPhraseAsArray(arr) {
@@ -31,8 +26,6 @@ function getRandomPhraseAsArray(arr) {
 
 //Set the game display
 function addPhraseToDisplay(arr) {
-   // do stuff any arr that is passed in, and add to `#phrase ul`
-
    for (let i = 0; i < arr.length; i++) {
       const li = document.createElement("li");
       li.textContent = arr[i];
@@ -46,7 +39,6 @@ function addPhraseToDisplay(arr) {
    phrase.appendChild(ul);
 }
 
-const phraseArray = getRandomPhraseAsArray(phrases);
 console.log(phraseArray);
 addPhraseToDisplay(phraseArray);
 
@@ -93,6 +85,7 @@ qwerty.addEventListener("click", (event) => {
          const startButton = document.querySelector(".btn__reset");
          startButton.textContent = buttonMessage;
          const p = document.createElement("p");
+         p.className = "statusMessage";
          p.textContent = statusMessage;
          overlay.appendChild(p);
       }
