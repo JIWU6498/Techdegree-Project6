@@ -6,7 +6,7 @@ const phrase = document.getElementById("phrase");
 const ul = phrase.firstElementChild;
 const shows = document.getElementsByClassName("show");
 const letters = document.getElementsByClassName("letter");
-const overlay=document.getElementById("overlay");
+const overlay = document.getElementById("overlay");
 //Count the missed guesses in the game
 const scoreboard = document.getElementById("scoreboard");
 //Create a missed variable to keep the track of the number of guesses
@@ -86,24 +86,22 @@ qwerty.addEventListener("click", (event) => {
       checkWin();
    }
 
- 
    function checkWin() {
+      function resetButton(status, buttonMessage, statusMessage) {
+         overlay.className = status;
+         overlay.style.display = "flex";
+         const startButton = document.querySelector(".btn__reset");
+         startButton.textContent = buttonMessage;
+         const p = document.createElement("p");
+         p.textContent = statusMessage;
+         overlay.appendChild(p);
+      }
       if (shows.length === letters.length) {
-         overlay.className = "win";
-         overlay.style.display = "block";
+         resetButton("win", "Play Again", "You won!");
       }
 
       if (missed >= 5) {
-         overlay.className = "lose";
-         overlay.style.display = "block";
-         const startGameButton = document.querySelector(".btn__reset");
-         overlay.removeChild(startGameButton);
-         const tryAgainButton=document.createElement("button");
-         tryAgainButton.textContent="Try Again";
-         overlay.appendChild(tryAgainButton);
-         const p = document.createElement("p");
-         p.textContent = "You Lose!";
-         overlay.appendChild(p);
+         resetButton("lose", "Try Again", "You lose!");
       }
    }
 });
