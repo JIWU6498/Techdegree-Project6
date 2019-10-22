@@ -76,6 +76,7 @@ qwerty.addEventListener("click", (event) => {
          li.innerHTML = `<img src="images/lostHeart.png" height="35px" width="35px">`;
          ol.appendChild(li);
       }
+      
       if(checkEndGame()===true){
          startButton.addEventListener('click', (event) => {
             resetStatus();
@@ -89,20 +90,23 @@ qwerty.addEventListener("click", (event) => {
 
 function checkEndGame() {
    function resetButton(status, buttonMessage, statusMessage) {
-      overlay.style.display = "flex";
+      
       overlay.className = status;
       startButton.textContent = buttonMessage;
       const p = document.createElement("p");
       p.className = "statusMessage";
       p.textContent = statusMessage;
       overlay.appendChild(p);
+      overlay.style.display = "flex";
    }
    if (shows.length === letters.length) {
-      resetButton("win", "Play Again", "You won!");
+      doDelay();
+      resetButton("win", "Play Again", "You woooooooooon!");
       return true;
    }
    if (missed >= 5) {
-      resetButton("lose", "Try Again", "You lose!");
+      doDelay();
+      resetButton("lose", "Try Again", "You loooooooose!");
       return true;
    }
    return false;
@@ -121,11 +125,13 @@ function resetStatus() {
       buttons[i].className = "";
       buttons[i].removeAttribute("disabled");
    }
+   
    //set the lives to liveHeart
    const li = ol.children;
    for (let i = 0; i < li.length; i++) {
       li[i].innerHTML = `<img src="images/liveHeart.png" height="35px" width="35px">`;
    }
+
    //reset the overlay status
    overlay.className = "start";
    startButton.textContent="Start Game";
@@ -136,6 +142,11 @@ function resetStatus() {
    }
 };
 
+function doDelay(){
+   window.setTimeout(function(){
+      return true;
+   },3000000);
+}
 
 
 

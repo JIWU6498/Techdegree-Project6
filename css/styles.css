@@ -92,11 +92,27 @@ button {
   width: 15px;
 }
 
-.show {
-  color: #000;
-  background-color: #76CE82;
-  /* CSS Transition */
+@keyframes skew {
+  0% {
+    transform: skewX(15deg);
+  }
+  100% {
+    transform: skewX(-15deg);
+  }
 }
+
+.show {
+  color: #FFF;
+  font-weight: bold;
+  background-color:var(--color-win);
+  
+  /* CSS Transition */
+  animation: skew 0.2s linear;
+  animation-iteration-count: 2;
+  animation-direction: alternate;
+  transition:var(--transition);
+}
+
 
 /* Keyboard */
 
@@ -110,6 +126,10 @@ button {
   border-radius: 5px;
   font-size: var(--font-size-medium);
   color: #FFFFFF;
+}
+
+.chosen .wrong{
+  background: var(--color-lose);
 }
 
 .btn__reset {
