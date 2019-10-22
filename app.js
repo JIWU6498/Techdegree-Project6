@@ -1,8 +1,6 @@
 const qwerty = document.getElementById("qwerty");
 const phrase = document.getElementById("phrase");
 const ul = phrase.firstElementChild;
-
-
 const shows = document.getElementsByClassName("show");
 const letters = document.getElementsByClassName("letter");
 const overlay = document.getElementById("overlay");
@@ -10,6 +8,7 @@ const p = document.querySelector(".statusMessage");
 const scoreboard = document.getElementById("scoreboard");
 const buttons = document.getElementsByTagName("button");
 const startButton = document.querySelector(".btn__reset");
+const ol = scoreboard.firstElementChild;
 
 
 let missed = 0;
@@ -18,9 +17,7 @@ let phraseArray = getRandomPhraseAsArray(phrases);
 
 startButton.addEventListener("click", () => {
    document.getElementById("overlay").style.display = "none";
-
 });
-
 
 //Create a getRandomPhraseAsArray function.
 function getRandomPhraseAsArray(arr) {
@@ -62,18 +59,16 @@ function checkLetter(button) {
       return null;
    }
 };
-const ol = scoreboard.firstElementChild;
+
 //Add an event listener to the keyboard.
 qwerty.addEventListener("click", (event) => {
    if (event.target.tagName === "BUTTON") {
       const button = event.target;
       button.className = "chosen";
       button.setAttribute("disabled", true);
-
       const letterFound = checkLetter(button);
       if (letterFound === null) {
          missed = missed + 1;
-
          const liFirst = ol.firstElementChild;
          ol.removeChild(liFirst);
          let li = document.createElement('li');
@@ -81,16 +76,13 @@ qwerty.addEventListener("click", (event) => {
          ol.appendChild(li);
       }
       checkWin();
-
    }
-
 });
 
 function checkWin() {
    function resetButton(status, buttonMessage, statusMessage) {
       overlay.className = status;
       overlay.style.display = "flex";
-      const startButton = document.querySelector(".btn__reset");
       startButton.textContent = buttonMessage;
       startButton.className = "restartButton";
       const p = document.createElement("p");
@@ -101,17 +93,14 @@ function checkWin() {
    if (shows.length === letters.length) {
       resetButton("win", "Play Again", "You won!");
       const restartButton = document.querySelector(".restartButton");
-      console.log(restartButton);
       restartButton.addEventListener('click', (error) => {
          resetStatus();
-
       });
    }
 
    if (missed >= 5) {
       resetButton("lose", "Try Again", "You lose!");
       const restartButton = document.querySelector(".restartButton");
-      console.log(restartButton);
       restartButton.addEventListener('click', (error) => {
          resetStatus();
       });
@@ -135,6 +124,10 @@ function checkWin() {
       for (let i = 0; i < li.length; i++) {
          li[i].innerHTML = `<img src="images/liveHeart.png" height="35px" width="35px">`;
       }
+      //reset the overlay status
+      overlay.className = "start";
+      overlay.innerHTML = `<h2 class="title">Wheel of Success</h2>
+      <a class="btn__reset">Start Game</a>`;
 
    }
 }
