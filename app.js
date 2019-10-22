@@ -101,12 +101,10 @@ function checkEndGame() {
       overlay.style.display = "flex";
    }
    if (shows.length === letters.length) {
-      doDelay();
       resetButton("win", "Play Again", "Congratualtions! You won! :->");
       return true;
    }
    if (missed >= 5) {
-      doDelay();
       resetButton("lose", "Try Again", "Oh...You lose! :-(");
       return true;
    }
@@ -144,11 +142,7 @@ function resetStatus() {
    }
 };
 
-function doDelay(){
-   window.setTimeout(function(){
-      return true;
-   },3000000);
-}
+
 
 
 
