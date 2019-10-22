@@ -1,5 +1,6 @@
 const overlay = document.getElementById("overlay");
 const startButton = document.querySelector(".btn__reset");
+const restartButton=document.querySelector(".restartButton");
 
 const phrase = document.getElementById("phrase");
 const qwerty = document.getElementById("qwerty");
@@ -63,6 +64,8 @@ function checkLetter(button) {
 
 //Add an event listener to the keyboard.
 qwerty.addEventListener("click", (event) => {
+   
+
    if (event.target.tagName === "BUTTON") {
       const button = event.target;
       button.className = "chosen";
@@ -76,11 +79,49 @@ qwerty.addEventListener("click", (event) => {
          li.innerHTML = `<img src="images/lostHeart.png" height="35px" width="35px">`;
          ol.appendChild(li);
       }
-      checkWin();
+
+      if(checkEndGame()===true){
+         startButton.addEventListener('click', (event) => {
+            resetStatus();
+         });
+      }else{
+         checkEndGame();
+      }
    }
+
+ 
 });
 
-function checkWin() {
+function resetStatus() {
+   //set the missed variable to 0;
+   missed = 0;
+   //remove all the ul children
+   ul.innerHTML = "";
+   //set the new phrases
+   let newPhrases = getRandomPhraseAsArray(phrases);
+   addPhraseToDisplay(newPhrases);
+   //set all the disabled button 
+   for (let i = 0; i < buttons.length; i++) {
+      buttons[i].className = "";
+      buttons[i].removeAttribute("disabled");
+   }
+   //set the lives to liveHeart
+   const li = ol.children;
+   for (let i = 0; i < li.length; i++) {
+      li[i].innerHTML = `<img src="images/liveHeart.png" height="35px" width="35px">`;
+   }
+   //reset the overlay status
+   overlay.className = "start";
+   startButton.textContent="Start Game";
+   startButton.className="btn__reset";
+   const p = document.querySelector(".statusMessage");
+   if(p!=null){
+      overlay.removeChild(p);
+   }
+}
+
+function checkEndGame() {
+
    function resetButton(status, buttonMessage, statusMessage) {
       overlay.style.display = "flex";
       overlay.className = status;
@@ -90,44 +131,19 @@ function checkWin() {
       p.textContent = statusMessage;
       overlay.appendChild(p);
    }
+
    if (shows.length === letters.length) {
       resetButton("win", "Play Again", "You won!");
-      startButton.addEventListener('click', (event) => {
-         resetStatus();
-      });
+      return true;
    }
 
    if (missed >= 5) {
       resetButton("lose", "Try Again", "You lose!");
-      startButton.addEventListener('click', (event) => {
-         resetStatus();
-      });
+      return true;
    }
 
-   function resetStatus() {
-      //set the missed variable to 0;
-      missed = 0;
-      //remove all the ul children
-      ul.innerHTML = "";
-      //set the new phrases
-      let newPhrases = getRandomPhraseAsArray(phrases);
-      addPhraseToDisplay(newPhrases);
-      //set all the disabled button 
-      for (let i = 0; i < buttons.length; i++) {
-         buttons[i].className = "";
-         buttons[i].removeAttribute("disabled");
-      }
-      //set the lives to liveHeart
-      const li = ol.children;
-      for (let i = 0; i < li.length; i++) {
-         li[i].innerHTML = `<img src="images/liveHeart.png" height="35px" width="35px">`;
-      }
-      //reset the overlay status
-      // overlay.className = "start";
-      // overlay.innerHTML = `<h2 class="title">Wheel of Success</h2>
-      // <a class="btn__reset">Start Game</a>`;
-      // const p = document.querySelector(".statusMessage");
-   }
+   return false;
+
 }
 
 
