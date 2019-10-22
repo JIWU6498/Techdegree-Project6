@@ -70,6 +70,7 @@ qwerty.addEventListener("click", (event) => {
       const letterFound = checkLetter(button);
       if (letterFound === null) {
          missed = missed + 1;
+         button.style.backgroundColor="#df8a2d";
          const oldLI = ol.firstElementChild;
          ol.removeChild(oldLI);
          const li = document.createElement('li');
@@ -124,6 +125,7 @@ function resetStatus() {
    for (let i = 0; i < buttons.length; i++) {
       buttons[i].className = "";
       buttons[i].removeAttribute("disabled");
+      buttons[i].removeAttribute("style");
    }
    
    //set the lives to liveHeart
