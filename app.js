@@ -1,19 +1,20 @@
-const qwerty = document.getElementById("qwerty");
-const phrase = document.getElementById("phrase");
-const ul = phrase.firstElementChild;
-const shows = document.getElementsByClassName("show");
-const letters = document.getElementsByClassName("letter");
 const overlay = document.getElementById("overlay");
-const p = document.querySelector(".statusMessage");
-const scoreboard = document.getElementById("scoreboard");
-const buttons = document.getElementsByTagName("button");
 const startButton = document.querySelector(".btn__reset");
+
+const phrase = document.getElementById("phrase");
+const qwerty = document.getElementById("qwerty");
+const scoreboard = document.getElementById("scoreboard");
+
+const ul = phrase.firstElementChild;
 const ol = scoreboard.firstElementChild;
 
+const letters = document.getElementsByClassName("letter");
+const shows = document.getElementsByClassName("show");
+
+const buttons = document.getElementsByTagName("button");
 
 let missed = 0;
 let phrases = ["Good Morning", "Amazon River", "Welcome", "Programming", "Happy everyday"];
-let phraseArray = getRandomPhraseAsArray(phrases);
 
 startButton.addEventListener("click", () => {
    document.getElementById("overlay").style.display = "none";
@@ -41,7 +42,7 @@ function addPhraseToDisplay(arr) {
    phrase.appendChild(ul);
 }
 
-console.log(phraseArray);
+let phraseArray = getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(phraseArray);
 
 //Create a checkLetter function.
@@ -56,7 +57,7 @@ function checkLetter(button) {
    if (letter != null) {
       return letter;
    } else {
-      return null;
+      return letter;
    }
 };
 
@@ -69,9 +70,9 @@ qwerty.addEventListener("click", (event) => {
       const letterFound = checkLetter(button);
       if (letterFound === null) {
          missed = missed + 1;
-         const liFirst = ol.firstElementChild;
-         ol.removeChild(liFirst);
-         let li = document.createElement('li');
+         const oldLI = ol.firstElementChild;
+         ol.removeChild(oldLI);
+         const li = document.createElement('li');
          li.innerHTML = `<img src="images/lostHeart.png" height="35px" width="35px">`;
          ol.appendChild(li);
       }
@@ -81,10 +82,9 @@ qwerty.addEventListener("click", (event) => {
 
 function checkWin() {
    function resetButton(status, buttonMessage, statusMessage) {
-      overlay.className = status;
       overlay.style.display = "flex";
+      overlay.className = status;
       startButton.textContent = buttonMessage;
-      startButton.className = "restartButton";
       const p = document.createElement("p");
       p.className = "statusMessage";
       p.textContent = statusMessage;
@@ -92,16 +92,14 @@ function checkWin() {
    }
    if (shows.length === letters.length) {
       resetButton("win", "Play Again", "You won!");
-      const restartButton = document.querySelector(".restartButton");
-      restartButton.addEventListener('click', (error) => {
+      startButton.addEventListener('click', (event) => {
          resetStatus();
       });
    }
 
    if (missed >= 5) {
       resetButton("lose", "Try Again", "You lose!");
-      const restartButton = document.querySelector(".restartButton");
-      restartButton.addEventListener('click', (error) => {
+      startButton.addEventListener('click', (event) => {
          resetStatus();
       });
    }
@@ -125,10 +123,10 @@ function checkWin() {
          li[i].innerHTML = `<img src="images/liveHeart.png" height="35px" width="35px">`;
       }
       //reset the overlay status
-      overlay.className = "start";
-      overlay.innerHTML = `<h2 class="title">Wheel of Success</h2>
-      <a class="btn__reset">Start Game</a>`;
-
+      // overlay.className = "start";
+      // overlay.innerHTML = `<h2 class="title">Wheel of Success</h2>
+      // <a class="btn__reset">Start Game</a>`;
+      // const p = document.querySelector(".statusMessage");
    }
 }
 
