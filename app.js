@@ -1,6 +1,5 @@
 const overlay = document.getElementById("overlay");
 const startButton = document.querySelector(".btn__reset");
-const restartButton=document.querySelector(".restartButton");
 
 const phrase = document.getElementById("phrase");
 const qwerty = document.getElementById("qwerty");
@@ -64,8 +63,6 @@ function checkLetter(button) {
 
 //Add an event listener to the keyboard.
 qwerty.addEventListener("click", (event) => {
-   
-
    if (event.target.tagName === "BUTTON") {
       const button = event.target;
       button.className = "chosen";
@@ -79,7 +76,6 @@ qwerty.addEventListener("click", (event) => {
          li.innerHTML = `<img src="images/lostHeart.png" height="35px" width="35px">`;
          ol.appendChild(li);
       }
-
       if(checkEndGame()===true){
          startButton.addEventListener('click', (event) => {
             resetStatus();
@@ -88,9 +84,29 @@ qwerty.addEventListener("click", (event) => {
          checkEndGame();
       }
    }
-
- 
+   
 });
+
+function checkEndGame() {
+   function resetButton(status, buttonMessage, statusMessage) {
+      overlay.style.display = "flex";
+      overlay.className = status;
+      startButton.textContent = buttonMessage;
+      const p = document.createElement("p");
+      p.className = "statusMessage";
+      p.textContent = statusMessage;
+      overlay.appendChild(p);
+   }
+   if (shows.length === letters.length) {
+      resetButton("win", "Play Again", "You won!");
+      return true;
+   }
+   if (missed >= 5) {
+      resetButton("lose", "Try Again", "You lose!");
+      return true;
+   }
+   return false;
+};
 
 function resetStatus() {
    //set the missed variable to 0;
@@ -118,32 +134,8 @@ function resetStatus() {
    if(p!=null){
       overlay.removeChild(p);
    }
-}
+};
 
-function checkEndGame() {
 
-   function resetButton(status, buttonMessage, statusMessage) {
-      overlay.style.display = "flex";
-      overlay.className = status;
-      startButton.textContent = buttonMessage;
-      const p = document.createElement("p");
-      p.className = "statusMessage";
-      p.textContent = statusMessage;
-      overlay.appendChild(p);
-   }
-
-   if (shows.length === letters.length) {
-      resetButton("win", "Play Again", "You won!");
-      return true;
-   }
-
-   if (missed >= 5) {
-      resetButton("lose", "Try Again", "You lose!");
-      return true;
-   }
-
-   return false;
-
-}
 
 
