@@ -14,7 +14,7 @@ const shows = document.getElementsByClassName("show");
 const buttons = document.getElementsByTagName("button");
 
 let missed = 0;
-let phrases = ["Good Morning", "Amazon River", "Welcome", "Programming", "Happy everyday"];
+let phrases = ["Good Morning", "Amazon River", "Welcome", "Programming", "Happy everyday","Eat Apple","My Websites","Good Afternoon","Be your best","Enjoy life"];
 
 startButton.addEventListener("click", () => {
    document.getElementById("overlay").style.display = "none";
@@ -22,7 +22,7 @@ startButton.addEventListener("click", () => {
 
 //Create a getRandomPhraseAsArray function.
 function getRandomPhraseAsArray(arr) {
-   let randomNumber = Math.floor(Math.random() * 5);
+   let randomNumber = Math.floor(Math.random() * 10);
    let characterArray = arr[randomNumber].toLowerCase().split("");
    return characterArray;
 }
@@ -43,6 +43,7 @@ function addPhraseToDisplay(arr) {
 }
 
 let phraseArray = getRandomPhraseAsArray(phrases);
+console.log(phraseArray);
 addPhraseToDisplay(phraseArray);
 
 //Create a checkLetter function.
@@ -91,7 +92,6 @@ qwerty.addEventListener("click", (event) => {
 
 function checkEndGame() {
    function resetButton(status, buttonMessage, statusMessage) {
-      
       overlay.className = status;
       startButton.textContent = buttonMessage;
       const p = document.createElement("p");
@@ -101,7 +101,7 @@ function checkEndGame() {
       overlay.style.display = "flex";
    }
    if (shows.length === letters.length) {
-      resetButton("win", "Play Again", "Congratualtions! You won! :->");
+      resetButton("win", "Play Again", "Congratualtions ! You won ! :->");
       return true;
    }
    if (missed >= 5) {
@@ -119,6 +119,7 @@ function resetStatus() {
    //set the new phrases
    let newPhrases = getRandomPhraseAsArray(phrases);
    addPhraseToDisplay(newPhrases);
+   console.log(newPhrases);
    //set all the disabled button 
    for (let i = 0; i < buttons.length; i++) {
       buttons[i].className = "";
