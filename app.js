@@ -101,12 +101,12 @@ function checkEndGame() {
    }
    if (shows.length === letters.length) {
       doDelay();
-      resetButton("win", "Play Again", "You woooooooooon!");
+      resetButton("win", "Play Again", "Congratualtions! You won! :->");
       return true;
    }
    if (missed >= 5) {
       doDelay();
-      resetButton("lose", "Try Again", "You loooooooose!");
+      resetButton("lose", "Try Again", "Oh...You lose! :-(");
       return true;
    }
    return false;
